@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Chasse aux Trésors Pâques – Pokémon Pokopia</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:#f0ece0;color:#1a1a1a;font-size:13px;}
+
+@media print{
+  body{background:white;font-size:12px;}
+  .no-print{display:none!important;}
+  .card{page-break-inside:avoid;break-inside:avoid;}
+  .page-break{page-break-after:always;break-after:always;}
+  .cover{background:#1a3a5c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .final-card{background:linear-gradient(135deg,#1a3a5c,#2d6a2f)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .parents-sheet{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+.wrap{max-width:210mm;margin:0 auto;padding:0 12px 40px;}
+
+/* COVER */
+.cover{
+  width:100%;min-height:260mm;margin:0 auto 0;
+  background:#1a3a5c;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 40px;text-align:center;color:white;
+  border-radius:0 0 24px 24px;
+}
+.cover-icon{font-size:72px;margin-bottom:20px;}
+.cover-title{font-size:32px;font-weight:900;line-height:1.2;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+.cover-sub{font-size:17px;font-weight:700;color:#ffd700;margin-bottom:28px;}
+.cover-msg{max-width:460px;font-size:13.5px;line-height:1.9;background:rgba(255,255,255,.11);border-radius:16px;padding:22px 28px;border:1px solid rgba(255,255,255,.18);font-style:italic;color:#f0f8ff;}
+.cover-msg strong{color:#ffd700;font-style:normal;}
+.cover-footer{margin-top:32px;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase;}
+.cover-steps{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.step-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;}
+
+/* SECTION LABELS */
+.section-lbl{text-align:center;margin:28px 0 14px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#888;}
+.dashed{border:none;border-top:2px dashed #ccc;margin:0 0 20px;}
+
+/* CARDS */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{border-radius:16px;padding:16px 15px 14px;position:relative;overflow:hidden;border:2px solid transparent;display:flex;flex-direction:column;gap:8px;}
+.c1{background:#fffbea;border-color:#f0c040;}
+.c2{background:#eaf7ec;border-color:#4caf50;}
+.c3{background:#e5f0fd;border-color:#2196f3;}
+.c4{background:#fce4ec;border-color:#e91e63;}
+.c5{background:#f3e5f5;border-color:#9c27b0;}
+.c6{background:#e0f7fa;border-color:#00bcd4;}
+.c7{background:#fff3e0;border-color:#ff9800;}
+.c8{background:#f1f8e9;border-color:#7cb342;}
+.c9{background:#f4f4f4;border-color:#607d8b;}
+.c10{background:#fff1f1;border-color:#e53935;}
+
+.badge{position:absolute;top:10px;right:12px;font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;opacity:.45;}
+.step-icon{font-size:26px;line-height:1;}
+.step-num{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.55;}
+.step-title{font-size:15px;font-weight:900;line-height:1.2;color:#111;}
+.bouldeneu{font-style:italic;font-size:11.5px;line-height:1.6;color:#2d4a1e;background:rgba(255,255,255,.55);border-left:3px solid #4caf50;padding:7px 10px;border-radius:0 8px 8px 0;}
+.enigme-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.5;margin-bottom:4px;}
+.enigme-box{background:rgba(255,255,255,.65);border-radius:10px;padding:11px 12px;font-size:12px;line-height:1.65;}
+
+/* Poème */
+.poem{font-style:italic;font-size:12px;line-height:1.9;color:#1a1a2e;text-align:center;padding:8px 4px;}
+.poem-line{display:block;}
+
+/* Code chiffré */
+.cipher-msg{font-family:monospace;font-size:14px;font-weight:700;letter-spacing:3px;background:white;padding:8px 12px;border-radius:8px;border:1px solid #ccc;color:#333;text-align:center;margin:6px 0;}
+.cipher-key{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px;}
+.cipher-key span{font-size:9px;background:white;border:1px solid #ddd;border-radius:4px;padding:1px 5px;font-family:monospace;color:#555;}
+
+/* Mirror */
+.mirror-box{background:white;border-radius:10px;padding:10px 14px;font-size:13.5px;font-weight:700;font-family:monospace;letter-spacing:1.5px;transform:scaleX(-1);display:block;color:#1a3a5c;border:1px solid #ccc;margin:8px 0;text-align:center;}
+
+/* Word search */
+.word-grid{display:inline-grid;gap:0;border:1.5px solid #aaa;border-radius:6px;overflow:hidden;margin:6px 0;}
+.word-grid span{width:21px;height:21px;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;border:0.5px solid #ddd;font-family:monospace;color:#222;background:white;}
+.words-list{font-size:10.5px;font-weight:700;color:#444;margin-top:5px;line-height:1.9;}
+
+/* Sudoku */
+.sudoku{border-collapse:collapse;font-size:13px;font-weight:700;margin:6px 0;}
+.sudoku td{width:23px;height:23px;text-align:center;vertical-align:middle;border:0.5px solid #bbb;font-family:monospace;background:white;color:#1a3a5c;}
+.sudoku td.empty{color:transparent;user-select:none;}
+.sudoku td.bl{border-left:2px solid #555;}
+.sudoku td.bt{border-top:2px solid #555;}
+
+/* Symbol code */
+.sym-msg{font-size:20px;letter-spacing:5px;text-align:center;padding:8px;background:white;border-radius:8px;border:1px solid #ccc;margin:6px 0;}
+.sym-key{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;}
+.sym-key span{font-size:10px;background:white;border:1px solid #ddd;border-radius:4px;padding:2px 6px;font-weight:700;}
+
+/* QR */
+.qr-wrap{display:flex;align-items:flex-start;gap:12px;margin:6px 0;}
+.qr-note{font-size:11.5px;line-height:1.65;color:#333;}
+.qr-timestamp{display:inline-block;background:#e53935;color:white;border-radius:5px;padding:1px 7px;font-size:11px;font-weight:700;}
+
+/* Rebus */
+.rebus{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:6px 0;font-size:17px;font-weight:900;justify-content:center;}
+.rw{font-size:11.5px;font-weight:700;color:#555;background:white;border-radius:6px;padding:2px 7px;border:1px solid #ddd;}
+.rop{font-size:13px;color:#888;}
+
+/* FINAL */
+.final-card{background:linear-gradient(135deg,#1a3a5c,#2d6a2f);color:white;border-radius:20px;padding:32px 36px;text-align:center;margin-top:28px;}
+.final-card h2{font-size:24px;font-weight:900;color:#ffd700;margin-bottom:12px;}
+.final-card p{font-size:13px;line-height:1.8;max-width:460px;margin:0 auto 12px;opacity:.92;}
+.final-pokemon{background:rgba(255,215,0,.18);border:1px solid rgba(255,215,0,.35);border-radius:12px;padding:14px 20px;margin-top:16px;font-weight:700;font-size:15px;color:#ffd700;}
+.final-egg{font-size:52px;margin:12px 0;}
+
+/* PARENTS SHEET */
+.parents-sheet{background:#1a1a1a;color:#f0f0f0;border-radius:16px;padding:24px 28px;margin:32px 0;}
+.parents-sheet h2{font-size:16px;font-weight:900;color:#ffd700;margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;}
+.parents-sheet table{width:100%;border-collapse:collapse;font-size:11.5px;}
+.parents-sheet th{background:#2a2a2a;color:#ffd700;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 8px;text-align:left;border-bottom:1px solid #444;}
+.parents-sheet td{padding:7px 8px;border-bottom:1px solid #2a2a2a;vertical-align:top;line-height:1.5;}
+.parents-sheet td:first-child{font-weight:700;white-space:nowrap;color:#aad4ff;}
+.parents-sheet td:nth-child(2){color:#ccc;}
+.parents-sheet td:nth-child(3){color:#88dd88;font-weight:700;}
+.parents-sheet .tip{background:#2a2a2a;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:11px;color:#ccc;line-height:1.7;border-left:3px solid #ffd700;}
+.parents-sheet .tip strong{color:#ffd700;}
+
+/* PRINT BTN */
+.print-btn{text-align:center;margin:20px auto;padding-bottom:8px;}
+.print-btn button{background:#1a3a5c;color:white;border:none;border-radius:30px;padding:11px 28px;font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;}
+.print-btn button:hover{background:#2d6a2f;}
+</style>
+</head>
+<body>
+
+<div class="no-print print-btn"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ══════════ COUVERTURE ══════════ -->
+<div class="cover page-break">
+  <div class="cover-icon">🥚</div>
+  <div class="cover-title">Chasse aux Trésors de Pâques</div>
+  <div class="cover-sub">Pokémon Pokopia · Mission Éclosion</div>
+  <div class="cover-msg">
+    <p><strong>Professeur Bouldeneu</strong> vous parle, chers petits explorateurs…</p><br>
+    <p>Jadis, humains et Pokémon vivaient ensemble dans la joie et l'harmonie, dans la région de Johto et au-delà. Puis un jour, les humains ont disparu. Je garde leurs souvenirs précieusement — comme je garde les lunettes de mon vieil ami.</p><br>
+    <p>Aujourd'hui, un <strong>œuf mystérieux</strong> a été trouvé. Un œuf qui renferme un Pokémon encore inconnu. Pour le faire éclore, vous devrez accomplir <strong>10 épreuves</strong> semées à travers Pokopia… c'est-à-dire ici même, chez vous !</p><br>
+    <p><em>Chaque étape vous rapprochera de l'éclosion. Bonne chance, dresseurs. 🌿</em></p>
+  </div>
+  <div class="cover-steps">
+    <span class="step-pill">📬 1</span><span class="step-pill">🍳 2</span><span class="step-pill">🍽️ 3</span><span class="step-pill">🪵 4</span><span class="step-pill">🛁 5</span>
+    <span class="step-pill">🌀 6</span><span class="step-pill">🌸 7</span><span class="step-pill">🫒 8</span><span class="step-pill">📱 9</span><span class="step-pill">🥕 10</span>
+  </div>
+  <div class="cover-footer">Pâques · Pokémon Pokopia · Prof. Bouldeneu</div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════ ANTISÈCHE PARENTS ══════════ -->
+<p class="section-lbl">Antisèche parents — ne pas imprimer avec les cartes enfants</p>
+<hr class="dashed">
+<div class="parents-sheet">
+  <h2>🔐 Antisèche — Réponses &amp; Instructions</h2>
+  <table>
+    <tr>
+      <th>Étape</th><th>Type · Indice pour les enfants bloqués</th><th>Réponse → lieu suivant</th>
+    </tr>
+    <tr>
+      <td>1 · Boîte aux lettres</td>
+      <td>Énigme poétique. Si bloqués : "Je fais cuire les repas, j'ai des feux et des casseroles."</td>
+      <td>CUISINE</td>
+    </tr>
+    <tr>
+      <td>2 · Cuisine</td>
+      <td>Code A=1. Si bloqués : donne-leur S=19 pour débloquer le 1er mot.</td>
+      <td>19·1·12·12·5 = SALLE / 1·13·1·14·7·5·18 = AMANGER → SALLE À MANGER</td>
+    </tr>
+    <tr>
+      <td>3 · Salle à manger</td>
+      <td>Message miroir — ils doivent trouver seuls qu'il faut un miroir. Si bloqués après 5 min : "Il y a un truc spécial avec ce texte…"</td>
+      <td>Texte inversé = "Cherchez le meuble de Mimi dans la maison" → MEUBLE DE MIMI</td>
+    </tr>
+    <tr>
+      <td>4 · Meuble de Mimi</td>
+      <td>Mots mystère. Le mot caché BAIN est le lieu suivant.</td>
+      <td>Chercher PICHU (vertical col.0), OEUF (horizontal ligne 0), ECLOS (diagonal ↘ depuis col 1). Mot caché = BAIN (horizontal ligne 5) → SALLE DE BAIN</td>
+    </tr>
+    <tr>
+      <td>5 · Salle de bain</td>
+      <td>Code symboles Pokémon. Si bloqués : "Chaque symbole = une lettre, utilise la clé."</td>
+      <td>★♦●●✦♦☾ = CELLIER</td>
+    </tr>
+    <tr>
+      <td>6 · Cellier</td>
+      <td>Énigme poétique Bouldeneu. Si bloqués : "Je suis dehors, je suis fleuri."</td>
+      <td>MASSIF</td>
+    </tr>
+    <tr>
+      <td>7 · Massif</td>
+      <td>Sudoku 4×4 avec 🔥💧🌿⚡. Les cases vides à compléter. Le mot caché OLIVIER est dans la grille une fois résolue.</td>
+      <td>Ligne 1: 🌿⚡🔥💧 / Ligne 2: 🔥💧⚡🌿 / Ligne 3: ⚡🌿💧🔥 / Ligne 4: 💧🔥🌿⚡ → mot caché = OLIVIER</td>
+    </tr>
+    <tr>
+      <td>8 · Olivier</td>
+      <td>Mots mystère. Le mot caché TERRASSE est le lieu suivant.</td>
+      <td>Chercher PIKACHU (horizontal L0), LUGIA (vertical col 4), EVOLI (vertical col 7). Mot caché = TERRASSE (horizontal L5) → TERRASSE COUVERTE</td>
+    </tr>
+    <tr>
+      <td>9 · Terrasse couverte</td>
+      <td>QR code → trailer Johto (youtube.com/watch?v=HK6Wsm_9x3I). À 0:23 on voit des légumes / un jardin. Si bloqués après la vidéo : "Regarde dehors."</td>
+      <td>POTAGER</td>
+    </tr>
+    <tr>
+      <td>10 · Potager</td>
+      <td>Rébus final. Si bloqués : "Chaque image donne un son, enlève des lettres."</td>
+      <td>🍅(TOMATE)-MATE + 🐒(SINGE)-SIN + 🏴‍☠️(PIRATE)-RATE = TO + GE + PI = TOGEPI (mais ne pas révéler — le trésor est là !)</td>
+    </tr>
+  </table>
+  <div class="tip">
+    <strong>Avant de cacher les cartes :</strong> générer un vrai QR code sur qr-code-generator.com avec l'URL <code>https://www.youtube.com/watch?v=HK6Wsm_9x3I&amp;t=23</code> et coller l'image sur la carte 9 à la place du QR code décoratif.<br><br>
+    <strong>Ordre de cachette :</strong> Boîte aux lettres → Cuisine → Salle à manger → Meuble de Mimi → Salle de bain → Cellier → Massif → Olivier → Terrasse couverte → Potager (trésor ici).<br><br>
+    <strong>Pokémon mystère :</strong> Placer la peluche/figurine avec la carte de révélation finale dans le potager. Ne pas mentionner le nom sur aucune carte.
+  </div>
+</div>
+
+<!-- ══════════ LES 10 CARTES ENFANTS ══════════ -->
+<p class="section-lbl">Les 10 cartes — à découper et cacher</p>
+<hr class="dashed">
+
+<div class="grid">
+
+<!-- ─────── ÉTAPE 1 · Boîte aux lettres · Énigme poétique ─────── -->
+<div class="card c1">
+  <div class="badge">Étape 1</div>
+  <div class="step-icon">📬</div>
+  <div class="step-num">Étape 1 · Boîte aux lettres</div>
+  <div class="step-title">L'œuf mystérieux apparaît !</div>
+  <div class="bouldeneu">"Je gardais cet œuf depuis si longtemps… Il appartient au monde des humains. C'est à vous de le faire éclore !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🌿 Énigme de Bouldeneu</div>
+    <div class="poem">
+      <span class="poem-line">Je suis le cœur chaud de la maison,</span>
+      <span class="poem-line">Là où naissent les bonnes saisons.</span>
+      <span class="poem-line">L'eau bout, l'huile crépite, les odeurs s'élèvent,</span>
+      <span class="poem-line">On me visite matin, midi et soir sans trêve.</span>
+      <span class="poem-line">Les Pokémon comme Rongragoût</span>
+      <span class="poem-line">Adorent me retrouver partout.</span>
+      <span class="poem-line">Qui suis-je ?</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 2 · Cuisine · Code A=1 ─────── -->
+<div class="card c2">
+  <div class="badge">Étape 2</div>
+  <div class="step-icon">🍳</div>
+  <div class="step-num">Étape 2 · Cuisine</div>
+  <div class="step-title">La chaleur de la cuisine</div>
+  <div class="bouldeneu">"Un œuf a besoin de chaleur pour éclore. Rongragoût cuisinerait avec amour pour ce bébé Pokémon. Vous êtes sur la bonne voie !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🔐 Code chiffré → Étape 3</div>
+    <p style="font-size:11px;margin-bottom:6px;">Chaque chiffre correspond à une lettre de l'alphabet. A=1, B=2, C=3…</p>
+    <div class="cipher-msg">19 · 1 · 12 · 12 · 5 <br/> 1 <br/> 13 · 1 · 14 · 7 · 5 · 18</div>
+    <div class="cipher-key">
+      <span>A=1</span><span>B=2</span><span>C=3</span><span>D=4</span><span>E=5</span><span>F=6</span><span>G=7</span><span>H=8</span><span>I=9</span><span>J=10</span><span>K=11</span><span>L=12</span><span>M=13</span><span>N=14</span><span>O=15</span><span>P=16</span><span>Q=17</span><span>R=18</span><span>S=19</span><span>T=20</span><span>U=21</span><span>V=22</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 3 · Salle à manger · Message miroir ─────── -->
+<div class="card c3">
+  <div class="badge">Étape 3</div>
+  <div class="step-icon">🍽️</div>
+  <div class="step-num">Étape 3 · Salle à manger</div>
+  <div class="step-title">Les souvenirs partagés</div>
+  <div class="bouldeneu">"Dans Pokopia, j'ai retrouvé des écrits humains — des journaux, des lettres. Ils parlaient de repas en famille, de fêtes. Ces moments me manquent tant…"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">✉️ Message secret → Étape 4</div>
+    <p style="font-size:11px;margin-bottom:4px;">Le Professeur Bouldeneu vous a laissé un message. Mais quelque chose ne va pas… Saurez-vous le déchiffrer ?</p>
+    <span class="mirror-box">Ouvrez le meuble de Mimi</span>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 4 · Meuble de Mimi · Mots mystère ─────── -->
+<div class="card c4">
+  <div class="badge">Étape 4</div>
+  <div class="step-icon">🪵</div>
+  <div class="step-num">Étape 4 · Meuble de Mimi</div>
+  <div class="step-title">Les traces du passé</div>
+  <div class="bouldeneu">"Les objets anciens portent des histoires. Moi aussi, je porte les lunettes de mon ami humain disparu. Ce meuble en sait long sur le temps qui passe."</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🔡 Mots mystère → Étape 5</div>
+    <p style="font-size:10.5px;margin-bottom:5px;">Retrouve les 3 mots Pokémon cachés dans la grille. Un 4ème mot secret se cache aussi… c'est le prochain lieu !</p>
+    <!--
+      Grille 7×6
+      PICHU  : vertical colonne 0, lignes 0-4
+      OEUF   : horizontal ligne 0, colonnes 3-6 (O E U F)
+      ECLOS  : diagonal ↘ depuis (0,1)
+      BAIN   : horizontal ligne 5, colonnes 2-5
+    -->
+    <div class="word-grid" style="grid-template-columns:repeat(7,21px);">
+      <!-- L0 --><span>P</span><span>E</span><span>B</span><span>O</span><span>E</span><span>U</span><span>F</span>
+      <!-- L1 --><span>I</span><span>A</span><span>C</span><span>N</span><span>P</span><span>K</span><span>W</span>
+      <!-- L2 --><span>C</span><span>Z</span><span>R</span><span>L</span><span>V</span><span>X</span><span>J</span>
+      <!-- L3 --><span>H</span><span>C</span><span>Q</span><span>L</span><span>O</span><span>Y</span><span>D</span>
+      <!-- L4 --><span>U</span><span>H</span><span>M</span><span>U</span><span>G</span><span>S</span><span>R</span>
+      <!-- L5 --><span>M</span><span>K</span><span>B</span><span>A</span><span>I</span><span>N</span><span>Z</span>
+    </div>
+    <div class="words-list">Mots à trouver : PICHU &nbsp;·&nbsp; OEUF &nbsp;·&nbsp; ECLOS &nbsp;·&nbsp; + le lieu mystère ?</div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 5 · Salle de bain · Symboles Pokémon ─────── -->
+<div class="card c5">
+  <div class="badge">Étape 5</div>
+  <div class="step-icon">🛁</div>
+  <div class="step-num">Étape 5 · Salle de bain</div>
+  <div class="step-title">L'eau purificatrice</div>
+  <div class="bouldeneu">"Dans la région de Johto, il fallait prendre soin de son œuf chaque jour. L'eau, les soins, la patience… L'œuf commence à bouger !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🔐 Code Pokémon → Étape 6</div>
+    <p style="font-size:11px;margin-bottom:5px;">Chaque symbole correspond à une lettre. Utilise la clé pour déchiffrer le message !</p>
+    <div class="sym-msg">★ ♦ ● ● ✦ ♦ ☾</div>
+    <div class="sym-key">
+      <span>★ = C</span>
+      <span>♦ = E</span>
+      <span>● = L</span>
+      <span>✦ = I</span>
+      <span>☾ = R</span>
+      <span>♠ = P</span>
+      <span>♥ = O</span>
+      <span>✿ = N</span>
+      <span>✪ = A</span>
+      <span>◆ = S</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 6 · Cellier · Énigme poétique Bouldeneu ─────── -->
+<div class="card c6">
+  <div class="badge">Étape 6</div>
+  <div class="step-icon">🌀</div>
+  <div class="step-num">Étape 6 · Cellier</div>
+  <div class="step-title">La réserve secrète</div>
+  <div class="bouldeneu">"Les humains stockaient des provisions pour l'hiver, cultivaient leur jardin avec soin. Dans Pokopia, leurs écrits en parlent avec amour. Vous, vous faites pareil."</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🌿 Énigme de Bouldeneu → Étape 7</div>
+    <div class="poem">
+      <span class="poem-line">Je ne suis pas une forêt, pourtant je suis plein de vie.</span>
+      <span class="poem-line">Les fleurs y poussent là où la pelle a bougé la terre.</span>
+      <span class="poem-line">Maman y a passé du temps récemment,</span>
+      <span class="poem-line">Pour que les couleurs reviennent après l'hiver sévère.</span>
+      <span class="poem-line">Dans Pokopia, la nature qui renaît me donne espoir.</span>
+      <span class="poem-line">Cherchez-moi dans le jardin, au coin fleuri du soir.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 7 · Massif · Sudoku Pokémon 4×4 ─────── -->
+<div class="card c7">
+  <div class="badge">Étape 7</div>
+  <div class="step-icon">🌸</div>
+  <div class="step-num">Étape 7 · Massif</div>
+  <div class="step-title">La nature qui renaît</div>
+  <div class="bouldeneu">"La nature revient ! Dans Pokopia, j'ai passé des années à la voir disparaître… et puis, doucement, comme ces fleurs, elle est revenue. L'œuf s'agite !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🔢 Sudoku Pokémon → Étape 8</div>
+    <p style="font-size:10.5px;margin-bottom:5px;">Complète la grille : 1 seul de chaque symbole par ligne, colonne et carré 2×2. Une fois terminée, lis les symboles des cases vides de haut en bas et de gauche à droite — ils forment le prochain lieu !</p>
+    <table class="sudoku">
+      <tr>
+        <td class="empty">·</td><td class="bl">💧</td><td>⚡️</td><td>🌿</td>
+      </tr>
+      <tr>
+        <td>⚡️</td><td class="bl">🌿</td><td>🔥</td><td class="empty">·</td>
+      </tr>
+      <tr>
+        <td class="bt">💧</td><td class="bt bl">🔥</td><td class="bt">🌿</td><td class="bt empty">·</td>
+      </tr>
+      <tr>
+        <td class="empty">·</td><td class="bt bl">⚡️</td><td class="bt">💧</td><td class="bt">🔥</td>
+      </tr>
+    </table>
+    <p style="font-size:10px;color:#888;margin-top:5px;">🔥 = O &nbsp;·&nbsp; 💧 = L &nbsp;·&nbsp; ⚡️ = I &nbsp;·&nbsp; 🌿 = V &nbsp; — lis les cases vides dans l'ordre !</p>
+    <p style="font-size:10px;color:#555;margin-top:4px;font-style:italic;">💡 Ces 4 lettres sont le début du mot </p>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 8 · Olivier · Mots mystère ─────── -->
+<div class="card c8">
+  <div class="badge">Étape 8</div>
+  <div class="step-icon">🫒</div>
+  <div class="step-num">Étape 8 · Olivier</div>
+  <div class="step-title">L'arbre de mémoire</div>
+  <div class="bouldeneu">"Les oliviers vivent des centaines d'années. J'aurais aimé que les humains restent aussi longtemps. Mais leurs souvenirs demeurent — et vous voilà, vous aussi !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🔡 Mots mystère → Étape 9</div>
+    <p style="font-size:10.5px;margin-bottom:5px;">Retrouve PIKACHU, LUGIA, EVOLI. Un dernier mot se cache aussi dans la grille — c'est le prochain lieu !</p>
+    <!--
+      Grille 8×6
+      PIKACHU  : horizontal L0 cols 0-6
+      LUGIA    : vertical col 4, lignes 1-5
+      EVOLI    : vertical col 7, lignes 0-4
+      TERRASSE : horizontal L5 cols 0-7
+    -->
+    <div class="word-grid" style="grid-template-columns:repeat(8,21px);">
+      <!-- L0 --><span>P</span><span>I</span><span>K</span><span>A</span><span>C</span><span>H</span><span>U</span><span>E</span>
+      <!-- L1 --><span>N</span><span>R</span><span>B</span><span>D</span><span>L</span><span>W</span><span>X</span><span>V</span>
+      <!-- L2 --><span>T</span><span>S</span><span>Q</span><span>J</span><span>U</span><span>Y</span><span>D</span><span>O</span>
+      <!-- L3 --><span>G</span><span>F</span><span>C</span><span>K</span><span>G</span><span>R</span><span>A</span><span>L</span>
+      <!-- L4 --><span>D</span><span>U</span><span>H</span><span>M</span><span>I</span><span>N</span><span>W</span><span>I</span>
+      <!-- L5 --><span>T</span><span>E</span><span>R</span><span>R</span><span>A</span><span>S</span><span>S</span><span>E</span>
+    </div>
+    <div class="words-list">Mots à trouver : PIKACHU &nbsp;·&nbsp; LUGIA &nbsp;·&nbsp; EVOLI &nbsp;·&nbsp; + le lieu mystère ?</div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 9 · Terrasse · QR code ─────── -->
+<div class="card c9">
+  <div class="badge">Étape 9 ⭐</div>
+  <div class="step-icon">📱</div>
+  <div class="step-num">Étape 9 · Terrasse couverte</div>
+  <div class="step-title">Le message de Pokopia</div>
+  <div class="bouldeneu">"Presque au bout ! L'œuf tremble, il vibre, il s'impatiente… Le Professeur Bouldeneu vous a laissé un message vidéo depuis les archives de Johto. Regardez bien !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">📱 Message vidéo → Étape 10</div>
+    <div class="qr-wrap">
+      <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+  
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100" height="100" viewBox="0 0 2000 2000" x="0" y="0" shape-rendering="crispEdges"><defs/><rect x="0" y="0" width="2000" height="2000" fill="#ffffff"/><rect x="712" y="200" width="64" height="64" fill="#000000"/><rect x="1032" y="200" width="64" height="64" fill="#000000"/><rect x="1160" y="200" width="64" height="64" fill="#000000"/><rect x="1224" y="200" width="64" height="64" fill="#000000"/><rect x="712" y="264" width="64" height="64" fill="#000000"/><rect x="904" y="264" width="64" height="64" fill="#000000"/><rect x="968" y="264" width="64" height="64" fill="#000000"/><rect x="1160" y="264" width="64" height="64" fill="#000000"/><rect x="712" y="328" width="64" height="64" fill="#000000"/><rect x="776" y="328" width="64" height="64" fill="#000000"/><rect x="968" y="328" width="64" height="64" fill="#000000"/><rect x="1224" y="328" width="64" height="64" fill="#000000"/><rect x="712" y="392" width="64" height="64" fill="#000000"/><rect x="776" y="392" width="64" height="64" fill="#000000"/><rect x="840" y="392" width="64" height="64" fill="#000000"/><rect x="968" y="392" width="64" height="64" fill="#000000"/><rect x="1032" y="392" width="64" height="64" fill="#000000"/><rect x="1160" y="392" width="64" height="64" fill="#000000"/><rect x="776" y="456" width="64" height="64" fill="#000000"/><rect x="840" y="456" width="64" height="64" fill="#000000"/><rect x="968" y="456" width="64" height="64" fill="#000000"/><rect x="1032" y="456" width="64" height="64" fill="#000000"/><rect x="1096" y="456" width="64" height="64" fill="#000000"/><rect x="1224" y="456" width="64" height="64" fill="#000000"/><rect x="712" y="520" width="64" height="64" fill="#000000"/><rect x="776" y="520" width="64" height="64" fill="#000000"/><rect x="840" y="520" width="64" height="64" fill="#000000"/><rect x="712" y="584" width="64" height="64" fill="#000000"/><rect x="840" y="584" width="64" height="64" fill="#000000"/><rect x="968" y="584" width="64" height="64" fill="#000000"/><rect x="1096" y="584" width="64" height="64" fill="#000000"/><rect x="1224" y="584" width="64" height="64" fill="#000000"/><rect x="840" y="648" width="64" height="64" fill="#000000"/><rect x="904" y="648" width="64" height="64" fill="#000000"/><rect x="200" y="712" width="64" height="64" fill="#000000"/><rect x="264" y="712" width="64" height="64" fill="#000000"/><rect x="456" y="712" width="64" height="64" fill="#000000"/><rect x="520" y="712" width="64" height="64" fill="#000000"/><rect x="584" y="712" width="64" height="64" fill="#000000"/><rect x="840" y="712" width="64" height="64" fill="#000000"/><rect x="968" y="712" width="64" height="64" fill="#000000"/><rect x="1416" y="712" width="64" height="64" fill="#000000"/><rect x="1544" y="712" width="64" height="64" fill="#000000"/><rect x="1608" y="712" width="64" height="64" fill="#000000"/><rect x="1672" y="712" width="64" height="64" fill="#000000"/><rect x="1736" y="712" width="64" height="64" fill="#000000"/><rect x="328" y="776" width="64" height="64" fill="#000000"/><rect x="392" y="776" width="64" height="64" fill="#000000"/><rect x="648" y="776" width="64" height="64" fill="#000000"/><rect x="1032" y="776" width="64" height="64" fill="#000000"/><rect x="1224" y="776" width="64" height="64" fill="#000000"/><rect x="1288" y="776" width="64" height="64" fill="#000000"/><rect x="1544" y="776" width="64" height="64" fill="#000000"/><rect x="1736" y="776" width="64" height="64" fill="#000000"/><rect x="328" y="840" width="64" height="64" fill="#000000"/><rect x="456" y="840" width="64" height="64" fill="#000000"/><rect x="584" y="840" width="64" height="64" fill="#000000"/><rect x="648" y="840" width="64" height="64" fill="#000000"/><rect x="712" y="840" width="64" height="64" fill="#000000"/><rect x="776" y="840" width="64" height="64" fill="#000000"/><rect x="840" y="840" width="64" height="64" fill="#000000"/><rect x="1032" y="840" width="64" height="64" fill="#000000"/><rect x="1096" y="840" width="64" height="64" fill="#000000"/><rect x="1160" y="840" width="64" height="64" fill="#000000"/><rect x="1224" y="840" width="64" height="64" fill="#000000"/><rect x="1480" y="840" width="64" height="64" fill="#000000"/><rect x="1672" y="840" width="64" height="64" fill="#000000"/><rect x="1736" y="840" width="64" height="64" fill="#000000"/><rect x="264" y="904" width="64" height="64" fill="#000000"/><rect x="328" y="904" width="64" height="64" fill="#000000"/><rect x="392" y="904" width="64" height="64" fill="#000000"/><rect x="776" y="904" width="64" height="64" fill="#000000"/><rect x="968" y="904" width="64" height="64" fill="#000000"/><rect x="1032" y="904" width="64" height="64" fill="#000000"/><rect x="1352" y="904" width="64" height="64" fill="#000000"/><rect x="1608" y="904" width="64" height="64" fill="#000000"/><rect x="1672" y="904" width="64" height="64" fill="#000000"/><rect x="1736" y="904" width="64" height="64" fill="#000000"/><rect x="392" y="968" width="64" height="64" fill="#000000"/><rect x="456" y="968" width="64" height="64" fill="#000000"/><rect x="584" y="968" width="64" height="64" fill="#000000"/><rect x="712" y="968" width="64" height="64" fill="#000000"/><rect x="904" y="968" width="64" height="64" fill="#000000"/><rect x="1032" y="968" width="64" height="64" fill="#000000"/><rect x="1096" y="968" width="64" height="64" fill="#000000"/><rect x="1352" y="968" width="64" height="64" fill="#000000"/><rect x="1672" y="968" width="64" height="64" fill="#000000"/><rect x="1736" y="968" width="64" height="64" fill="#000000"/><rect x="200" y="1032" width="64" height="64" fill="#000000"/><rect x="264" y="1032" width="64" height="64" fill="#000000"/><rect x="328" y="1032" width="64" height="64" fill="#000000"/><rect x="520" y="1032" width="64" height="64" fill="#000000"/><rect x="840" y="1032" width="64" height="64" fill="#000000"/><rect x="968" y="1032" width="64" height="64" fill="#000000"/><rect x="1032" y="1032" width="64" height="64" fill="#000000"/><rect x="1160" y="1032" width="64" height="64" fill="#000000"/><rect x="1224" y="1032" width="64" height="64" fill="#000000"/><rect x="1288" y="1032" width="64" height="64" fill="#000000"/><rect x="1352" y="1032" width="64" height="64" fill="#000000"/><rect x="1544" y="1032" width="64" height="64" fill="#000000"/><rect x="456" y="1096" width="64" height="64" fill="#000000"/><rect x="520" y="1096" width="64" height="64" fill="#000000"/><rect x="584" y="1096" width="64" height="64" fill="#000000"/><rect x="648" y="1096" width="64" height="64" fill="#000000"/><rect x="776" y="1096" width="64" height="64" fill="#000000"/><rect x="840" y="1096" width="64" height="64" fill="#000000"/><rect x="904" y="1096" width="64" height="64" fill="#000000"/><rect x="968" y="1096" width="64" height="64" fill="#000000"/><rect x="1032" y="1096" width="64" height="64" fill="#000000"/><rect x="1096" y="1096" width="64" height="64" fill="#000000"/><rect x="1224" y="1096" width="64" height="64" fill="#000000"/><rect x="1480" y="1096" width="64" height="64" fill="#000000"/><rect x="328" y="1160" width="64" height="64" fill="#000000"/><rect x="392" y="1160" width="64" height="64" fill="#000000"/><rect x="456" y="1160" width="64" height="64" fill="#000000"/><rect x="776" y="1160" width="64" height="64" fill="#000000"/><rect x="840" y="1160" width="64" height="64" fill="#000000"/><rect x="904" y="1160" width="64" height="64" fill="#000000"/><rect x="1032" y="1160" width="64" height="64" fill="#000000"/><rect x="1224" y="1160" width="64" height="64" fill="#000000"/><rect x="1352" y="1160" width="64" height="64" fill="#000000"/><rect x="1608" y="1160" width="64" height="64" fill="#000000"/><rect x="200" y="1224" width="64" height="64" fill="#000000"/><rect x="264" y="1224" width="64" height="64" fill="#000000"/><rect x="328" y="1224" width="64" height="64" fill="#000000"/><rect x="456" y="1224" width="64" height="64" fill="#000000"/><rect x="520" y="1224" width="64" height="64" fill="#000000"/><rect x="584" y="1224" width="64" height="64" fill="#000000"/><rect x="648" y="1224" width="64" height="64" fill="#000000"/><rect x="712" y="1224" width="64" height="64" fill="#000000"/><rect x="776" y="1224" width="64" height="64" fill="#000000"/><rect x="968" y="1224" width="64" height="64" fill="#000000"/><rect x="1224" y="1224" width="64" height="64" fill="#000000"/><rect x="1288" y="1224" width="64" height="64" fill="#000000"/><rect x="1352" y="1224" width="64" height="64" fill="#000000"/><rect x="1416" y="1224" width="64" height="64" fill="#000000"/><rect x="1480" y="1224" width="64" height="64" fill="#000000"/><rect x="1736" y="1224" width="64" height="64" fill="#000000"/><rect x="712" y="1288" width="64" height="64" fill="#000000"/><rect x="776" y="1288" width="64" height="64" fill="#000000"/><rect x="840" y="1288" width="64" height="64" fill="#000000"/><rect x="1032" y="1288" width="64" height="64" fill="#000000"/><rect x="1160" y="1288" width="64" height="64" fill="#000000"/><rect x="1224" y="1288" width="64" height="64" fill="#000000"/><rect x="1480" y="1288" width="64" height="64" fill="#000000"/><rect x="1544" y="1288" width="64" height="64" fill="#000000"/><rect x="1736" y="1288" width="64" height="64" fill="#000000"/><rect x="1032" y="1352" width="64" height="64" fill="#000000"/><rect x="1096" y="1352" width="64" height="64" fill="#000000"/><rect x="1224" y="1352" width="64" height="64" fill="#000000"/><rect x="1352" y="1352" width="64" height="64" fill="#000000"/><rect x="1480" y="1352" width="64" height="64" fill="#000000"/><rect x="712" y="1416" width="64" height="64" fill="#000000"/><rect x="776" y="1416" width="64" height="64" fill="#000000"/><rect x="968" y="1416" width="64" height="64" fill="#000000"/><rect x="1224" y="1416" width="64" height="64" fill="#000000"/><rect x="1480" y="1416" width="64" height="64" fill="#000000"/><rect x="1544" y="1416" width="64" height="64" fill="#000000"/><rect x="1608" y="1416" width="64" height="64" fill="#000000"/><rect x="1672" y="1416" width="64" height="64" fill="#000000"/><rect x="1736" y="1416" width="64" height="64" fill="#000000"/><rect x="712" y="1480" width="64" height="64" fill="#000000"/><rect x="840" y="1480" width="64" height="64" fill="#000000"/><rect x="904" y="1480" width="64" height="64" fill="#000000"/><rect x="968" y="1480" width="64" height="64" fill="#000000"/><rect x="1032" y="1480" width="64" height="64" fill="#000000"/><rect x="1160" y="1480" width="64" height="64" fill="#000000"/><rect x="1224" y="1480" width="64" height="64" fill="#000000"/><rect x="1288" y="1480" width="64" height="64" fill="#000000"/><rect x="1352" y="1480" width="64" height="64" fill="#000000"/><rect x="1416" y="1480" width="64" height="64" fill="#000000"/><rect x="1480" y="1480" width="64" height="64" fill="#000000"/><rect x="776" y="1544" width="64" height="64" fill="#000000"/><rect x="840" y="1544" width="64" height="64" fill="#000000"/><rect x="968" y="1544" width="64" height="64" fill="#000000"/><rect x="1032" y="1544" width="64" height="64" fill="#000000"/><rect x="1096" y="1544" width="64" height="64" fill="#000000"/><rect x="1224" y="1544" width="64" height="64" fill="#000000"/><rect x="1352" y="1544" width="64" height="64" fill="#000000"/><rect x="1416" y="1544" width="64" height="64" fill="#000000"/><rect x="1544" y="1544" width="64" height="64" fill="#000000"/><rect x="1672" y="1544" width="64" height="64" fill="#000000"/><rect x="1736" y="1544" width="64" height="64" fill="#000000"/><rect x="776" y="1608" width="64" height="64" fill="#000000"/><rect x="840" y="1608" width="64" height="64" fill="#000000"/><rect x="904" y="1608" width="64" height="64" fill="#000000"/><rect x="1096" y="1608" width="64" height="64" fill="#000000"/><rect x="1224" y="1608" width="64" height="64" fill="#000000"/><rect x="1288" y="1608" width="64" height="64" fill="#000000"/><rect x="1352" y="1608" width="64" height="64" fill="#000000"/><rect x="1480" y="1608" width="64" height="64" fill="#000000"/><rect x="1672" y="1608" width="64" height="64" fill="#000000"/><rect x="712" y="1672" width="64" height="64" fill="#000000"/><rect x="776" y="1672" width="64" height="64" fill="#000000"/><rect x="840" y="1672" width="64" height="64" fill="#000000"/><rect x="904" y="1672" width="64" height="64" fill="#000000"/><rect x="1032" y="1672" width="64" height="64" fill="#000000"/><rect x="1416" y="1672" width="64" height="64" fill="#000000"/><rect x="1480" y="1672" width="64" height="64" fill="#000000"/><rect x="1544" y="1672" width="64" height="64" fill="#000000"/><rect x="1608" y="1672" width="64" height="64" fill="#000000"/><rect x="1736" y="1672" width="64" height="64" fill="#000000"/><rect x="712" y="1736" width="64" height="64" fill="#000000"/><rect x="1032" y="1736" width="64" height="64" fill="#000000"/><rect x="1096" y="1736" width="64" height="64" fill="#000000"/><rect x="1416" y="1736" width="64" height="64" fill="#000000"/><rect x="1480" y="1736" width="64" height="64" fill="#000000"/><rect x="1544" y="1736" width="64" height="64" fill="#000000"/><rect x="1608" y="1736" width="64" height="64" fill="#000000"/><rect x="1672" y="1736" width="64" height="64" fill="#000000"/><rect x="1736" y="1736" width="64" height="64" fill="#000000"/><svg version="1.1" id="Ebene_1" x="200" y="200" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M21.2-0.1C9.5-0.1-0.1,9.5-0.1,21.2v78.8v100v100v100v100v100v78.8c0,11.7,9.5,21.3,21.3,21.3h657.6  c11.7,0,21.3-9.5,21.3-21.3V600V500V400V300V200v-100V21.2c0-11.7-9.5-21.3-21.3-21.3H21.2z M600,200v100v100v100v87.8  c0,6.8-5.5,12.2-12.2,12.2H112.2c-6.8,0-12.2-5.5-12.2-12.2V500V400V300V200v-87.8c0-6.8,5.5-12.2,12.2-12.2h475.6  c6.8,0,12.2,5.5,12.2,12.2V200z"/>
+</svg>
+<svg version="1.1" id="Ebene_1" x="200" y="200" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M500,400V300v-78.8c0-11.7-9.5-21.3-21.3-21.3H221.2c-11.7,0-21.3,9.5-21.3,21.3V300v100v78.8    c0,11.7,9.5,21.3,21.3,21.3h257.5c11.7,0,21.3-9.5,21.3-21.3V400z"/>
+</svg>
+<svg version="1.1" id="Ebene_1" x="1352" y="200" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M21.2-0.1C9.5-0.1-0.1,9.5-0.1,21.2v78.8v100v100v100v100v100v78.8c0,11.7,9.5,21.3,21.3,21.3h657.6  c11.7,0,21.3-9.5,21.3-21.3V600V500V400V300V200v-100V21.2c0-11.7-9.5-21.3-21.3-21.3H21.2z M600,200v100v100v100v87.8  c0,6.8-5.5,12.2-12.2,12.2H112.2c-6.8,0-12.2-5.5-12.2-12.2V500V400V300V200v-87.8c0-6.8,5.5-12.2,12.2-12.2h475.6  c6.8,0,12.2,5.5,12.2,12.2V200z"/>
+</svg>
+<svg version="1.1" id="Ebene_1" x="1352" y="200" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M500,400V300v-78.8c0-11.7-9.5-21.3-21.3-21.3H221.2c-11.7,0-21.3,9.5-21.3,21.3V300v100v78.8    c0,11.7,9.5,21.3,21.3,21.3h257.5c11.7,0,21.3-9.5,21.3-21.3V400z"/>
+</svg>
+<svg version="1.1" id="Ebene_1" x="200" y="1352" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M21.2-0.1C9.5-0.1-0.1,9.5-0.1,21.2v78.8v100v100v100v100v100v78.8c0,11.7,9.5,21.3,21.3,21.3h657.6  c11.7,0,21.3-9.5,21.3-21.3V600V500V400V300V200v-100V21.2c0-11.7-9.5-21.3-21.3-21.3H21.2z M600,200v100v100v100v87.8  c0,6.8-5.5,12.2-12.2,12.2H112.2c-6.8,0-12.2-5.5-12.2-12.2V500V400V300V200v-87.8c0-6.8,5.5-12.2,12.2-12.2h475.6  c6.8,0,12.2,5.5,12.2,12.2V200z"/>
+</svg>
+<svg version="1.1" id="Ebene_1" x="200" y="1352" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve" width="448" height="448" shape-rendering="auto">
+
+<path fill="#000000" d="M500,400V300v-78.8c0-11.7-9.5-21.3-21.3-21.3H221.2c-11.7,0-21.3,9.5-21.3,21.3V300v100v78.8    c0,11.7,9.5,21.3,21.3,21.3h257.5c11.7,0,21.3-9.5,21.3-21.3V400z"/>
+</svg>
+</svg>
+
+</svg>
+
+      <div class="qr-note">
+        Scanne ce QR code avec un téléphone 📱<br><br>
+        Le Professeur Bouldeneu a laissé un message vidéo dans les archives de Johto.<br><br>
+        Regardez attentivement — l'indice se cache là.<br><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────── ÉTAPE 10 · Potager · Rébus final ─────── -->
+<div class="card c10">
+  <div class="badge">Étape 10 · FINALE 🏆</div>
+  <div class="step-icon">🥕</div>
+  <div class="step-num">Étape finale · Potager</div>
+  <div class="step-title">L'œuf s'ouvre… enfin !</div>
+  <div class="bouldeneu">"Vous l'avez fait ! Vous avez traversé tout Pokopia ! C'est grâce à votre courage, votre curiosité et votre amour que cet œuf peut maintenant éclore. Mon cœur déborde de joie !"</div>
+  <div class="enigme-box">
+    <div class="enigme-label">🎉 Dernier rébus — qui est dans l'œuf ?</div>
+    <p style="font-size:11px;margin-bottom:7px;">Résous ce dernier rébus pour découvrir quel Pokémon dort dans l'œuf !</p>
+    <div class="rebus">
+      <span>🍅</span><span class="rop">−</span><span class="rw">MATE</span>
+      <span class="rop">+</span>
+      <span>🐒</span><span class="rop">−</span><span class="rw">SIN</span>
+      <span class="rop">+</span>
+      <span>🏴‍☠️</span><span class="rop">−</span><span class="rw">RATE</span>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px;font-style:italic;">Ton Pokémon mystère t'attend quelque part ici… 🥚✨</p>
+  </div>
+</div>
+
+</div><!-- fin .grid -->
+
+<!-- ══════════ CARTE FINALE ══════════ -->
+<hr class="dashed" style="margin-top:32px;">
+<p class="section-lbl">Carte de révélation — à placer avec le trésor dans le potager</p>
+<hr class="dashed">
+
+<div class="final-card">
+  <div class="final-egg">🥚✨🐣</div>
+  <h2>L'œuf a éclos !</h2>
+  <p>Félicitations, valeureux dresseurs ! Vous avez traversé les 10 épreuves de Pokopia. Votre courage, votre intelligence et votre amour ont réchauffé cet œuf mystérieux jusqu'à ce qu'il s'ouvre enfin.</p>
+  <p>Dans la région de Johto, les œufs n'éclosent que lorsqu'ils sont portés avec amour, étape après étape. C'est exactement ce que vous avez fait.</p>
+  <div class="final-pokemon">
+    🌟 Voici votre Pokémon Mystère ! 🌟<br>
+    <span style="font-size:12px;font-weight:400;color:rgba(255,215,0,.75);">Prenez-en soin — il n'attendait que vous.</span>
+  </div>
+  <p style="margin-top:22px;font-size:11.5px;opacity:.5;font-style:italic;">
+    "Merci à vous, chers dresseurs. Vous m'avez rappelé pourquoi les humains et les Pokémon étaient si bien ensemble. Je garderai ce souvenir pour toujours."<br>— <strong>Professeur Bouldeneu</strong>
+  </p>
+</div>
+
+<div class="no-print print-btn" style="padding-bottom:48px;margin-top:20px;">
+  <button onclick="window.print()">🖨️ Imprimer</button>
+</div>
+
+</div><!-- fin .wrap -->
+</body>
+</html>

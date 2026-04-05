@@ -2,7 +2,7 @@
 
 Printable treasure hunts and games for kids.
 
-**[Play online]([https://berteaux.github.io/games/](https://berteaux.github.io/treasure-hunts-printable/))**
+**[Play online](https://berteaux.github.io/games/](https://berteaux.github.io/treasure-hunts-printable/))**
 
 ## Available Games
 

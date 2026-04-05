@@ -4,6 +4,8 @@ Printable treasure hunts and games for kids.
 
 **[Play online](https://berteaux.github.io/treasure-hunts-printable/)**
 
+![screenshot](screenshot.png)
+
 ## Available Games
 
 - **Pokopia Treasure Hunt** (FR) -- A 10-step Pokemon-themed Easter treasure hunt for kids. Print, cut, hide, play!
